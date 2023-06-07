@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <!-- <div id="app">
+        <p><input v-model.number="amount"></p>
+        <p>count:{{count}}</p>
+        <!-- <button v-on:click="plus">Plus</button> -->
+    <!-- v-on:可以簡寫成@、傳入參數之寫法plus(參數名稱,$event) -->
+    <!-- <button @click="plus(amount,$event)">Plus</button>
+    </div> -->
+
+    <!-- 對話框輸入數字，按按鈕可以及時與前一個數字相加 -->
+    <div id="app">
+        <p><input v-model.number="amount"></p>
+        <p>count:{{count}}</p>
+        <button v-on:click='plus(amount,$event)'>Plus</button>
+    </div>
+
+    <!-- .self -->
+    <div id="app2">
+        <h4>toggleModal without .self</h4>
+        <div class="modal-mask" :style="modalStyle"> //是背景
+            <div class="modal-container" @click.self="toggleModals">
+                <div class="modal-body">你好嗎</div>
+            </div>
+        </div>
+        <button @click='isShow = true'>open</button>
+
+        <!-- <input v-model="msg"> = 
+        <input : value="msg" @input="msg = $event.target.value"> -->
+    </div>
+
+    <div id="app3">
+        <div class="messages">
+            <div v-for="m in messages">{{m}}</div>
+        </div>
+
+        <input class="input_one" type="text" 
+        v-model="msg" 
+        placeholder="輸入任意文字後按下空白鍵" 
+        @keydown.enter="addToMessages"> 
+    </div>
+
+    <div id="app4">
+        <input type="checkbox" v-model="isShow">isShow:true
+
+        <div v-if="isShow">v-if</div>
+        <div v-show="isShow">v-show</div>
+    </div>
+
+    <div id="app5">
+        <p>count: {{count}}</p>
+        <button v-on:click="count++">Plus</button>
+        <button v-on:click="count=0">Reset</button>
+
+        <div class="wrap">
+            <div v-if="count === 0" class="wrap-content" style="background-color:red">Block A</div>
+            <div v-else-if="count < 5" class="wrap-content" style="background-color:orange">Block B</div>
+            <div v-else class="wrap-content" style="background-color:blue">Block C</div>
+        </div>
+    </div>
+
+    <div id="app6">
+        Choose One:
+        <label>
+            <input type="radio" value="username" v-model="loginType">Username
+        </label>
+        <label>
+            <input type="radio" value="email" v-model="loginType">Email
+        </label>
+        <hr>
+        Username
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your Email" key="email">
+        </template>
+    </div>
+
+    <div id="app7">
+        <ul>
+            <li v-for="(item,index) in arr">{{index}} : {{item}}</li>
+        </ul>
+    </div>
+
+    <div id="app8">
+        <ul>
+            <li v-for="(val,key) in book">{{key}} : {{val}}</li>
+        </ul>
+    </div>
+
+    <div id="app9">
+        <ul>
+            <li v-for="page in 10" @click.prevent>
+                <a href>{{page}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+        integrity='sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=='
+        crossorigin='anonymous'></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        (function () {
+            // // const vm = new Vue({
+            //     data: {
+            //         amount: 0,
+            //         count: 0
+            //     }, 
+            //     methods: {
+            //         plus(amount,event) {
+            //             console.log(event.target.tagName)
+            //             this.count += amount
+            //         }
+            //     }
+            // }).$mount('#app')
+
+            const vm = new Vue({
+                data: {
+                    amount: 0,
+                    count: 0
+                },
+                methods: {
+                    plus(amount, event) {
+                        console.log(event.target.tagName) //console結果是BUTTON
+                        this.count += amount
+                    }
+                },
+            }).$mount('#app')
+
+            const vm2 = new Vue({
+                data:{
+                    isShow: false
+                },
+                computed:{
+                    modalStyle(){
+                        return{
+                            'display': this.isShow ? '':'none'  //這個有打開？如果有就顯示出來，不然就關掉 
+                        };   
+                    }
+                },
+                methods: {
+                    toggleModals(){
+                        this.isShow =!this.isShow; //隱藏與顯示切換
+                    }
+                },
+            }).$mount('#app2')
+
+            const vm3 = new Vue({
+                data:{
+                    msg:'',
+                    messages:[]
+                },
+                methods: {
+                    addToMessages(){
+                        this.messages.push(this.msg) //應該是把在msg輸入框打的字push到messages文字框中
+                        this.msg = '' //抓取輸入框打的字
+                    }
+                },
+            }).$mount('#app3')
+
+            const vm4 =  new Vue({
+                data:{
+                    isShow: true
+                }
+            }).$mount('#app4')
+
+            const vm5 = new Vue({
+                data:{
+                    count: 0
+                }
+            }).$mount('#app5')
+
+            const vm6 = new Vue({
+                data:{
+                    loginType: 'username'
+                }
+            }).$mount('#app6')
+
+            const vm7 = new Vue({
+                data:{
+                    arr:['07','hi','we','573']
+                }
+            }).$mount('#app7')
+
+            const vm8 = new Vue({
+                data:{
+                    book:{
+                        title: 'wonderful day',
+                        author: 'Jimmy',
+                        publishedAt: '2021/11'
+                    }
+                }
+            }).$mount('#app8')
+
+            const vm9 = new Vue({}).$mount('#app9')
+        })()
+    </script>
+</body>
+
+</html>

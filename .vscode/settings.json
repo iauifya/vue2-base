@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "inputcontent"
+    ],
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "editor.rulers":[90,120],
+    "editor.wordWrap":"on",
+    "emmet.triggerExpansionOnTab": true,
+    "liveServer.settings.port": 5501,
+}

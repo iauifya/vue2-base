@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app">
+        <p>假設, 1 日幣 = 0.278 台幣, 且 1 美金 = 28.540 台幣, 且 1 澳幣 = 20.750 台幣 </p>
+        <div>台幣 <input type="text" v-model="twd"></div>
+        <div>日幣 <input type="text" v-model="jpy"></div>
+        <div>美金 <input type="text" v-model="usd"></div>
+        <div>澳幣 <input type="text" v-model="aud"></div>
+    </div>
+
+    <button v-bind:disabled="isBtnDisabled">Click me!</button>
+
+    <div id="app2">
+        <input type="radio" id="one" value="1" v-model="picked">
+        <label for="one">one</label>
+        <input type="radio" id="two" value="2" v-model="picked">
+        <label for="two">two</label>
+        <p>Pick:{{picked}}</p>
+    </div>
+
+    <div id="app3">
+        <input type="checkbox" id="John" value="John" v-model="checkNames">
+        <label for="John">John</label>
+        <input type="checkbox" id="Tommy" value="Tommy" v-model="checkNames">
+        <label for="Tommy">Tommy</label>
+        <input type="checkbox" id="Amy" value="Amy" v-model="checkNames">
+        <label for="Amy">Amy</label>
+        <p>Checked names:{{checkNames}}</p>
+    </div>
+
+    <div id="app4">
+        <input type="checkbox" id="checkbox" v-model="isChecked">
+        <label for="checkbox">checked</label>
+        <p>checked:{{isChecked}}</p>
+    </div>
+
+    <div id="app5">
+        <select v-model="selected">
+            <option disabled value="">請選擇</option>
+            <option>台北市</option>
+            <option>新北市</option>
+            <option>桃園市</option>
+            <option>新竹市</option>
+        </select>
+        <p>select:{{selected || '未選擇'}}</p>
+    </div>
+
+    <!-- v-text -->
+    <div id="app6" v-text="text"></div>
+
+    <!-- v-text與v-html的差別：v-text只會改變html的字串，v-html會連樣式一起改變 -->
+    <div id="app7" v-text="text"></div>
+    <div id="app8" v-html="text"></div>
+
+    <div id="app9">
+        <input type="text" v-model.trim='message' v-bind:class="{'error' : message.length > 10 }">
+    </div>
+    <div id="app9_2">
+        <input type="text" v-model.trim='message' v-bind:style='msgStyle' placeholder="請勿超過10個字">
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+        integrity='sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=='
+        crossorigin='anonymous'></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            data: {
+                twd: 1000
+            },
+            computed: {
+                jpy: {
+                    get() {
+                        return Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);  //toFixed(n)：取到小數第幾位
+                    },
+                    set(val) {
+                        this.twd = Number.parseFloat(Number(val) * 0.278).toFixed(3);
+                    }
+                },
+                usd: {
+                    get() {
+                        return Number.parseFloat(Number(this.twd) / 28.540).toFixed(3);
+                    },
+                    set(val) {
+                        this.twd = Number.parseFloat(Number(val) * 28.540).toFixed(3);
+                    }
+                },
+                aud: {
+                    get() {
+                        return Number.parseFloat(Number(this.twd) / 20.75).toFixed(3);
+                    },
+                    set(val) {
+                        this.twd = Number.parseFloat(Number(val) * 20.75).toFixed(3);
+                    }
+                }
+
+            }
+        }).$mount('#app');
+
+        const vm2 = new Vue({
+            data: {
+                isBtnDisabled: true
+            }
+        }).$mount('button')
+
+        const vm3 = new Vue({
+            data: {
+                picked: 1
+            }
+        }).$mount('#app2')
+
+        const vm4 = new Vue({
+            data: {
+                checkNames: []
+            }
+        }).$mount('#app3')
+
+        const vm5 = new Vue({
+            data: {
+                isChecked: false
+            }
+        }).$mount('#app4')
+
+        const vm6 = new Vue({
+            data: {
+                selected: ''
+            }
+        }).$mount('#app5')
+
+        const vm7 = new Vue({
+            data: {
+                text: '我很好'
+            }
+        }).$mount('#app6')
+
+        const vm8 = new Vue({
+            data: {
+                text: '<h1>Have fun</h1>'
+            }
+        }).$mount('#app8')
+
+        const vm9 = new Vue({
+            data: {
+                message: ''
+            }
+        }).$mount('#app9')
+
+        // 將邏輯以computed屬性包裝，樣式由msgStyle管理
+        const vm9_2 = new Vue({
+            data: {
+                message: ''
+            },
+            computed: {
+                isVaild: function(){
+                    return this.message.length <= 10
+                },
+                msgStyle: function () {
+                    return {
+                        'border': this.isVaild ? '' : 'red solid 1px',
+                        'color':this.isVaild ? '':'red'
+                        
+                    };
+                }
+            }
+        }).$mount('#app9_2')
+    </script>
+</body>
+
+</html>

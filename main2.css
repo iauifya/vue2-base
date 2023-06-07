@@ -1,0 +1,56 @@
+* {
+    position: relative;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100vw;
+    height: auto;
+}
+
+.items {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    color: azure;
+    text-align: center;
+    /* z-index: 5; */
+}
+
+.h1 {
+    padding: 4px 40px;
+    border-radius: 8px;
+    background-color: #333;
+}
+
+span,
+a {
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+}
+
+.fas.fa-arrow-circle-left,
+.fas.fa-arrow-circle-right {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.menuItem {
+    display: inline-block;
+    margin: 0px 24px;
+    text-align: center;
+    line-height: 1.5rem;
+    min-width: 40vw;
+}

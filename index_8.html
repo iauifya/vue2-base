@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Tabs 選單範例 -->
+    <div id="app">
+        <!-- <h2>{{count}}</h2>
+        <button @click="count -=1">-1</button>
+        <button @click="count +=1">+1</button> -->
+        <button v-for="(content,index) of contents" @click="clickHandler" :data-index="index">{{content}}</button>
+        <!-- 這邊clickHandler比較像是偵聽的方式 -->
+        <button v-for="(content,index) of contents" @click="clickHandler2(index,$event)" :data-index="index">{{content}}</button>
+        <!-- 這邊clickHandler2(index,$event)比較像是直接呼叫 -->
+        <h2 v-for="(content,index) of contents" v-show="index === count">{{content}}</h2>
+        <!-- <h2>{{contents[count]}}</h2> -->
+        <div @click.self="selfClick">
+            <a href="#">
+                <button>Test</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+                total: 4,
+                contents: ['首頁', '產品特色', '關於我們', '聯絡我們']
+                    //for...of 內容用陣列的話要加index(索引) =>(n,index) of ns
+            },
+            methods: {
+                clickHandler(event) {
+                    console.log('click', event);
+                    this.count = parseInt(event.target.dataset.index);
+                },
+                clickHandler2(index) {
+                    console.log('click', event);
+                    this.count = index;
+                },
+                selfClick(event) {
+                    console.log(event.target);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{text}}</p>
+        <p><input type="text" v-model="text"></p>
+        <p><textarea type="text" v-model="text"></textarea></p>
+        <hr>
+        <p><input type="checkbox" v-model="edm">訂閱EDM</p>
+        <hr>
+        <p><input type="radio" v-model="check" value="A">A</p>
+        <p><input type="radio" v-model="check" value="B">B</p>
+        <p><input type="radio" v-model="check" value="C">C</p>
+        <hr>
+        <p><input type="checkbox" v-model="moreCheck" value="A">A</p>
+        <p><input type="checkbox" v-model="moreCheck" value="B">B</p>
+        <p><input type="checkbox" v-model="moreCheck" value="C">C</p>
+        <hr>
+        <div>
+            <p v-for="(item,index) in checkList"><input type="checkbox" v-model="moreCheck" :value="index">{{item}}</p>
+        </div>
+        <hr>
+        <p><input type="radio" v-model.number="gender" value="0">女</p>
+        <p><input type="radio" v-model.number="gender" value="1">男</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: 'KEKE',
+                edm: true,
+                check: 'A',
+                checkList: ['A', 'B', 'C'],
+                moreCheck: [], //多選要使用空陣列
+                gender: 0
+            }
+        })
+    </script>
+</body>
+
+</html>
